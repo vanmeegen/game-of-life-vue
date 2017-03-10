@@ -2,7 +2,6 @@ import {Action} from "../actions/Action";
 import StoreBase from "./StoreBase";
 import log from "../Logger";
 import {Point} from "../util/Geometry";
-import {observable} from "mobx";
 
 // split array into rows to make it faster
 function getLifeCell(cells: boolean[][], x: number, y: number): boolean {
@@ -15,9 +14,9 @@ function setLifeCell(cells: boolean[][], x: number, y: number, newContent: boole
 
 
 export class Board {
-  @observable public maxX: number;
-  @observable public maxY: number;
-  @observable public cells: boolean[][];
+  public maxX: number;
+  public maxY: number;
+  public cells: boolean[][];
   private readonly NEIGHBOR_OFFSETS: Point[] = [new Point(-1, -1), new Point(-1, 0), new Point(-1, 1), new Point(0, -1), new Point(0, 1), new Point(1, -1), new Point(1, 0), new Point(1, 1)];
   private neighbors: number[];
 

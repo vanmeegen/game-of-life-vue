@@ -1,10 +1,11 @@
+<template>
+<h1 @click="onClick">{{message}}</h1>
+</template>
+<script>
 import Vue = require("vue");
-import Component from "vue-class-component";
+import Component from 'vue-class-component'
 
-@Component({
-  template: '<button @click="onClick">Click!</button>'
-})
-export default class MyComponent extends Vue {
+@Component export default class App extends Vue {
   // Initial data can be declared as instance properties
   message: string = "Hello!";
   // Component methods can be declared as instance methods
@@ -12,3 +13,4 @@ export default class MyComponent extends Vue {
     window.alert(this.message)
   }
 }
+</script>

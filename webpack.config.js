@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require("webpack");
 
 module.exports = {
-  entry: {web: "./src/index.tsx"},
+  entry: {web: "./src/index.ts"},
   output: {
     // output path
     path: path.resolve(__dirname, 'public/dist'),
@@ -14,13 +14,14 @@ module.exports = {
 
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js", ".min.js"],
+    extensions: ["", ".webpack.js", ".web.js", ".ts", ".vue", ".tsx", ".js", ".min.js"],
     alias: {"ag-grid-root": __dirname + "/node_modules/ag-grid"}
   },
   module: {
     loaders: [
-      // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
-      {test: /\.tsx?$/, loader: "ts-loader"},
+      // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
+      { test: /\.vue$/, loader: "vue" },
+      { test: /\.ts$/, loader: "vue-ts" },
       {test: /\.css$/, loader: 'style-loader!css-loader'},
       {test: /\.(png|jpg|gif)$/, loader: "file-loader?name=img/[name].[ext]"},
 
@@ -30,11 +31,17 @@ module.exports = {
       {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader?limit=10000&mimetype=application/octet-stream"},
       {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader?limit=10000&mimetype=image/svg+xml"}
     ],
-
     preLoaders: [
       // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
       {test: /\.js$/, loader: "source-map-loader"}
     ]
+  },
+
+  vue: {
+    // instruct vue-loader to load TypeScript
+    loaders: { js: "vue-ts-loader"},
+    // make TS' generated code cooperate with vue-loader
+    esModule: true
   },
 
   externals: {

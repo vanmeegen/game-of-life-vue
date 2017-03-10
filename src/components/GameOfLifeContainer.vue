@@ -1,14 +1,4 @@
 import "./app.css";
-import * as React from "react";
-import log from "../Logger";
-import modelStore, {Board} from "../stores/ModelStore";
-import {HeaderBarComponent} from "./HeaderBarComponent";
-import {initRandom, initRegular, next, clear, set, size} from "../actions/ActionCreator";
-import {Point} from "../util/Geometry";
-import {Configuration} from "../common/Configuration";
-import {Grid} from "./Grid";
-import {CellGrid} from "./CellGrid";
-import {observer} from "mobx-react";
 
 interface LocalProps {
 
