@@ -1,44 +1,36 @@
-// lib imports
-import * as React from "react";
-import {FPSMeter} from "./FPSMeter";
+<template>
+ <div class="editor-bar" :title='tooltip || "unknown"'>
+   <div>
+     <h3 class="editor-title">{{title}}</h3>
+     <a href="http://www.mvmsoft.de" style="inline-block; margin-left: 5px">Marco van Meegen</a>
+       <FPSMeter :id="fpsId"/>
+   </div>
+   <div class="editor-menu btn-group" role="group">
+     <slot/>
+   </div>
+ </div>
+</template>
+<script>
+import Vue = require("vue");
+import Component from 'vue-class-component'
+import log from "../Logger";
+import FPSMeter from "./FPSMeter.vue";
 
-import ReactElement = React.ReactElement;
-import ReactNode = React.ReactNode;
-const shallowequal = require("shallowequal");
-/**
- * create an editor title and a menu bar, menu entries are addes as children
- * @author Marco van Meegen
- */
-interface LocalProps {
+@Component({
+props: {
+  title: String,
+  fpsId: String,
+  tooltip: String,
+  children: Object
+  },
+  components: {
+    FPSMeter
+  }
+})
+ export default class HeaderBarComponent extends Vue {
   title: string;
   fpsId: string;
-  tooltip?: string;
-  children?: ReactNode;
-
+  tooltip: string;
+  children: Object;
 }
-
-export class HeaderBarComponent extends React.Component<LocalProps, any> {
-  constructor(props: LocalProps) {
-    super(props);
-  }
-
-  shouldComponentUpdate(nextProps: LocalProps): boolean {
-    return !shallowequal(nextProps, this.props);
-  }
-
-  render(): JSX.Element {
-    return      <div className="editor-bar"; title={this.props.tooltip || "unknown"}>
-      <div>
-        <h3 className="editor-title">{this.props.title}</h3>
-        <a href="http://www.mvmsoft.de";
-           style={{"inline-block", marginLeft: "5px"};;;;}>Marco; van; Meegen</a>
-        <FPSMeter id={this.props.fpsId}/>
-      </div>
-      <div className="editor-menu btn-group"; role="group">
-        {this.props.children}
-      </div>
-    </div>;
-
-  }
-}
-
+</script>

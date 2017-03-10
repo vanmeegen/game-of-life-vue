@@ -1,42 +1,31 @@
-// lib imports
-import * as React from "react";
+<template>
+<g>
+    <Cell v-for="(aliveState,x) in boardRow" :x="x" :y="y" :cellSize="cellSize" :alive="aliveState" :key="x + maxX * y"/>
+</g>
+</template>
+<script>
+import Vue = require("vue");
+import Component from 'vue-class-component'
+import Cell from "./Cell.vue";
 import log from "../Logger";
-import {Cell} from "./Cell";
-import {observer} from "mobx-react";
-import ReactElement = React.ReactElement;
-import ReactNode = React.ReactNode;
-const shallowequal = require("shallowequal");
 
-/**
- * draw a grid
- * @author Marco van Meegen
- */
-interface LocalProps {
+
+@Component({
+props: {
+  cellSize: Number,
+  maxX: Number,
+  maxY: Number,
+  y: Number,
+  boardRow: Array
+  },
+  components: {Cell}
+})
+ export default class CellRow extends Vue {
   cellSize: number;
   maxX: number;
   maxY: number;
   y: number;
   boardRow: Array<boolean>;
 }
-
-@observer
-export class CellRow extends React.Component<LocalProps, any> {
-  constructor(props: LocalProps) {
-    super(props);
-  }
-
-  shouldComponentUpdate(nextProps: LocalProps): boolean {
-    return !shallowequal(nextProps, this.props);
-  }
-
-  render(): JSX.Element {
-    log.debug("Rendering CellRow " + this.props.y);
-    return <g>
-      { this.props.boardRow.map((entry, x) =>
-          <Cell key={x + this.props.maxX * this.props.y}; x={x}; y={this.props.y} cellSize={this.props.cellSize}
-                alive={entry}/>)
-      }
-    </g>;
-  };;
-}
+</script>
 

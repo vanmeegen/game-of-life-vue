@@ -1,33 +1,20 @@
-/**
- * Created by Marco on 03.03.2017.
- */
-// lib imports
-import * as React from "react";
-import ReactElement = React.ReactElement;
-import ReactNode = React.ReactNode;
+<template>
+  <h6 style='display: "inline-block"'>FPS
+    <span class="label label-default" :id="id">0</span>
+  </h6>
+</template>
+<script>
+import Vue = require("vue");
+import Component from 'vue-class-component'
+import log from "../Logger";
 
-/**
- * show an unmanaged label with the current frame rate
- * @author Marco van Meegen
- */
-interface LocalProps {
+
+@Component({
+props: {
+  id: String
+  }
+})
+export default class FPSMeter extends Vue {
   id: string;
 }
-
-export class FPSMeter extends React.Component<LocalProps, any> {
-  constructor(props: LocalProps) {
-    super(props);
-  }
-
-  shouldComponentUpdate(): boolean {
-    // will be managed directly in DOM
-    return false;
-  }
-
-  render(): JSX.Element {
-    return <h6 style={{ "5px", display: "inline-block" };;;;}>FPS
-      <span; className="label label-default"; style={{ "5px" };;} id={this.props.id}>0</span>
-    </h6>;
-  }
-}
-
+</script>

@@ -1,47 +1,27 @@
-import Vue from "vue";
-import Component from "vue-class-component";
+<template>
+<rect :x="x * cellSize + 1" :y="y * cellSize + 1" :width="cellSize - 2" :height="cellSize -2" :class='alive ? "field-filled" : "field-empty"'/>
+</template>
+<script>
+import Vue = require("vue");
+import Component from 'vue-class-component'
 import log from "../Logger";
 
-/**
- * draw a cell of a grid
- * @author Marco van Meegen
- */
-interface LocalProps {
+
+@Component({
+props: {
+  cellSize: Number,
+  x: Number,
+  y: Number,
+  alive: Boolean
+  }
+})
+ export default class Cell extends Vue {
+  // Initial data can be declared as instance properties
   cellSize: number;
   x: number;
   y: number;
   alive: boolean;
 }
+</script>
 
-@observer
-export class Cell extends React.Component<LocalProps, any> {
-  constructor(props: LocalProps) {
-    super(props);
-  }
 
-  shouldComponentUpdate(nextProps: LocalProps): boolean {
-    return !shallowequal(nextProps, this.props);
-  }
-
-  render(): JSX.Element {
-    log.debug("Rendering Cell " + this.props.x + "," + this.props.y);
-    return <rect x={this.props.x * this.props.cellSize + 1} y={this.props.y * this.props.cellSize + 1}
-                 width={this.props.cellSize - 2} height={this.props.cellSize - 2}
-    className = {this.props.alive ? "field-filled" : "field-empty"
-  }/>
-  }
-}
-
-// The @Component decorator indicates the class is a Vue component
-@Component({
-  // All component options are allowed in here
-  template: '<button @click="onClick">Click!</button>'
-})
-export default class MyComponent extends Vue {
-  // Initial data can be declared as instance properties
-  message: string = 'Hello!';
-  // Component methods can be declared as instance methods
-  onClick (): void {
-    window.alert(this.message)
-  }
-}

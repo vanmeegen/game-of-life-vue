@@ -1,41 +1,26 @@
-// lib imports
-import * as React from "react";
-import {CellRow} from "./CellRow";
-import {Board} from "../stores/ModelStore";
+<template>
+<g>
+    <CellRow v-for="(row,y) in board.cells" :maxX="board.maxX" :maxY="board.maxY" :y="y" :cellSize="cellSize" :boardRow="row" :key="y"/>
+</g>
+</template>
+<script>
+import Vue = require("vue");
+import Component from 'vue-class-component'
+import CellRow from "./CellRow.vue";
 import log from "../Logger";
-import {observer} from "mobx-react";
-import ReactElement = React.ReactElement;
-import ReactNode = React.ReactNode;
-const shallowequal = require("shallowequal");
+import {Board} from "../stores/ModelStore"
 
-/**
- * draw a grid
- * @author Marco van Meegen
- */
-interface LocalProps {
+
+@Component({
+    props: {
+        cellSize: Number,
+        board: Board
+    },
+    components: {CellRow}
+})
+ export default class CellGrid extends Vue {
   cellSize: number;
   board: Board;
 }
-
-@observer
-export class CellGrid extends React.Component<LocalProps, any> {
-  constructor(props: LocalProps) {
-    super(props);
-  }
-
-  render(): JSX.Element {
-    log.debug("Rendering CellGrid");
-    const svgElements: JSX.Element[] = [];
-    // create field contents
-    for (let y = 0; y < this.props.board.maxY; y++) {
-      svgElements.push(<CellRow key={y}; cellSize={this.props.cellSize} maxX={this.props.board.maxX}
-                                maxY={this.props.board.maxY} y={y};
-      boardRow = {this.props.board.cells[y]
-    }/>)
-    }
-    return <g>
-      {svgElements}
-    </g>;
-  }
-}
+</script>
 
