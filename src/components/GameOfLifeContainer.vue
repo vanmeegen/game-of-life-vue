@@ -8,14 +8,14 @@
       <button type="button" class="btn btn-default btn-s" @click="nextGeneration">Next Gen</button>
       <button type="button" class="btn btn-default btn-s" @click="startInfinite">Run</button>
       <div class="btn btn-default btn-s">
-        <label htmlFor="boardColumns" class="slider-label">Columns: ({board.maxX})</label>
+        <label htmlFor="boardColumns" class="slider-label">Columns: {{board.maxX}}</label>
         <input type="range" min="10" max="500" :value="board.maxX" name="boardColumns"
-          title="number of board columns" @change="changeBoardSize"/>
+          title="number of board columns" @input="changeBoardSize"/>
       </div>
       <div class="btn btn-default btn-s">
-        <label htmlFor="cellSize" class="slider-label">Cell: ({this.state.cellSize})</label>
-        <input type="range" min="3" max="30" :value="cellSize" name="cellSize" title="pixel per cell"
-                   @change="changeCellSize"/>
+        <label htmlFor="cellSize" class="slider-label">Cell:{{cellSize}}</label>
+        <input type="range" min="3" max="30" v-model="cellSize" name="cellSize" title="pixel per cell"
+                   @input="changeCellSize"/>
       </div>
     </HeaderBarComponent>
   </div>

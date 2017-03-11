@@ -9,14 +9,15 @@ function getLifeCell(cells: boolean[][], x: number, y: number): boolean {
 }
 
 function setLifeCell(cells: boolean[][], x: number, y: number, newContent: boolean): void {
-  cells[y][x] = newContent;
+  // special handling required to not break vue.js change detection
+  cells[y].splice(x, 1, newContent);
 }
 
 
 export class Board {
   public maxX: number;
   public maxY: number;
-  public cells: boolean[][];
+  public cells: boolean[][] = [];
   private readonly NEIGHBOR_OFFSETS: Point[] = [new Point(-1, -1), new Point(-1, 0), new Point(-1, 1), new Point(0, -1), new Point(0, 1), new Point(1, -1), new Point(1, 0), new Point(1, 1)];
   private neighbors: number[];
 
@@ -116,23 +117,27 @@ export class Board {
   }
 
   public initSize(x: number, y: number): Board {
+    // special handling required to not break vue.js change detection
     this.maxX = x;
     this.maxY = y;
     this.neighbors = new Array(x * y).fill(0);
-    const dummy = new Array(x);
-    const list: boolean[][] = new Array(y).fill(dummy);
-    list.forEach((row, index) => {
-      list[index] = new Array(x);
-    });
-    this.cells = list;
+    this.cells.splice(y);
+    for (let i = 0; i < y; i++){
+      this.setRow(i,[].splice(x));
+    }
     return this;
+  }
+
+  private setRow(i: number, value: boolean[]){
+    // special handling required to not break vue.js change detection
+    this.cells.splice(i, 1, value);
   }
 }
 
 export class ModelStore extends StoreBase {
 
   private _board: Board;
-  private static DEFAULT_SIZE: number = 10;
+  private static DEFAULT_SIZE: number = 150;
 
   constructor() {
     super();
