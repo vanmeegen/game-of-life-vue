@@ -11,7 +11,8 @@ export type ActionType =
         | "initRandom" /* init cell with random life */
         | "initRegular" /* init cell with regular pattern */
         | "set"
-        | "size";
+        | "size"
+        | "cellSize";
 /* set life on position maxX,maxY to value (true or false) */
 
 

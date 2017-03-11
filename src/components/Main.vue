@@ -1,5 +1,5 @@
 <template>
-    <GameOfLifeContainer :board="board" :cellSize="cellSize"/>
+    <GameOfLifeContainer :board="board"/>
 </template>
 <script>
 import Vue = require("vue");
@@ -16,8 +16,7 @@ components: {
  export default class Main extends Vue {
   data() {
       return {
-        board: modelStore.board,
-        cellSize: 10
+        board: modelStore.board
       }
   }
 }

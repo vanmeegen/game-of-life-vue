@@ -9,14 +9,17 @@ function getLifeCell(cells: boolean[][], x: number, y: number): boolean {
 }
 
 function setLifeCell(cells: boolean[][], x: number, y: number, newContent: boolean): void {
+  // doesnt work with vue: cells[y][x] = newContent; see https://vuejs.org/v2/guide/list.html#Array-Change-Detection
   // special handling required to not break vue.js change detection
   cells[y].splice(x, 1, newContent);
+
 }
 
 
 export class Board {
   public maxX: number;
   public maxY: number;
+  public cellSize: number;
   public cells: boolean[][] = [];
   private readonly NEIGHBOR_OFFSETS: Point[] = [new Point(-1, -1), new Point(-1, 0), new Point(-1, 1), new Point(0, -1), new Point(0, 1), new Point(1, -1), new Point(1, 0), new Point(1, 1)];
   private neighbors: number[];
@@ -24,6 +27,7 @@ export class Board {
 
   constructor(maxX: number, maxY: number) {
     this.initSize(maxX, maxY).initEmpty();
+    this.cellSize = 10;
   }
 
   set(x: number, y: number, value: boolean): void {
@@ -123,6 +127,7 @@ export class Board {
     this.neighbors = new Array(x * y).fill(0);
     this.cells.splice(y);
     for (let i = 0; i < y; i++){
+      // doesnt work with vue: this.cells[i] = new Array(x); // see https://vuejs.org/v2/guide/list.html#Array-Change-Detection
       this.setRow(i,[].splice(x));
     }
     return this;
@@ -170,6 +175,9 @@ export class ModelStore extends StoreBase {
         break;
       case "size":
         this._board.initSize(action.payload, action.payload).initEmpty();
+        break;
+      case "cellSize":
+        this._board.cellSize = action.payload;
         break;
       case "next":
         this._board.calculateNextGeneration();

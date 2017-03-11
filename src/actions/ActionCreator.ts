@@ -24,3 +24,7 @@ export function set(x: number, y: number, value: boolean): void {
 export function size(newSize: number): void {
   Dispatcher.dispatch({type: "size", payload: newSize});
 }
+
+export function cellSize(newSize: number): void {
+  Dispatcher.dispatch({type: "cellSize", payload: newSize});
+}

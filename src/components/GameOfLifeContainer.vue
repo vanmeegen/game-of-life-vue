@@ -13,17 +13,17 @@
           title="number of board columns" @input="changeBoardSize"/>
       </div>
       <div class="btn btn-default btn-s">
-        <label htmlFor="cellSize" class="slider-label">Cell:{{cellSize}}</label>
-        <input type="range" min="3" max="30" v-model="cellSize" name="cellSize" title="pixel per cell"
+        <label htmlFor="cellSize" class="slider-label">Cell:{{board.cellSize}}</label>
+        <input type="range" min="3" max="30" :value="board.cellSize" name="cellSize" title="pixel per cell"
                    @input="changeCellSize"/>
       </div>
     </HeaderBarComponent>
   </div>
   <div class="editor-container">
-    <svg width="100vh" height="100vh" @mouse-down="onMouseDown">
+    <svg width="100vh" height="100vh" @mousedown="onMouseDown" ref="svgRef">
       <g>
-        <Grid :cellSize="cellSize" :maxX="board.maxX" :maxY="board.maxY"/>
-        <CellGrid :cellSize="cellSize" :board="board"/>
+        <Grid :cellSize="board.cellSize" :maxX="board.maxX" :maxY="board.maxY"/>
+        <CellGrid :cellSize="board.cellSize" :board="board"/>
       </g>
     </svg>
   </div>
@@ -37,13 +37,13 @@ import CellGrid from "./CellGrid.vue";
 import Grid from "./Grid.vue";
 import HeaderBarComponent from "./HeaderBarComponent.vue";
 import {Board} from "../stores/ModelStore";
-import {initRandom, initRegular, next, clear, size, set} from "../actions/ActionCreator";
+import {initRandom, initRegular, next, clear, size, set, cellSize} from "../actions/ActionCreator";
 import {Point} from "../util/Geometry";
+import log from "../Logger";
 
 @Component({
     props: {
-       board: Board,
-       cellSize: Number
+       board: Board
     },
     components: {
       CellGrid, Grid, HeaderBarComponent
@@ -87,7 +87,7 @@ export default class GameOfLifeContainer extends Vue {
   }
 
   // The higher this value, the less the fps will reflect temporary variations
-// A value of 1 will only keep the last value
+  // A value of 1 will only keep the last value
   private filterStrength: number = 20;
   private totalFrameTime: number = 0;
   private lastGenerationTime: Date = new Date;
@@ -111,25 +111,7 @@ export default class GameOfLifeContainer extends Vue {
 
   private changeCellSize(evt: any): void {
     const value: number = parseInt(evt.target.value);
-    // TODO: implement
-  }
-
-  updateDimensions(): void {
-/* TODO: implement
-    if (this.refs["svgRef"]) {
-      // bounding box of all svg elements in canvas should be new size of viewport
-
-      const rect: SVGRect = (this.refs["svgRef"] as any).getBBox();
-
-      // determine viewport width and height, enlarge by padding width
-      const viewportWidth = rect.width + GameOfLifeContainer.PADDING_WIDTH * 2;
-      const viewportHeight = rect.height + GameOfLifeContainer.PADDING_WIDTH * 2;
-      const viewBoxString: string = `${-GameOfLifeContainer.PADDING_WIDTH} ${-GameOfLifeContainer.PADDING_WIDTH} ${viewportWidth - GameOfLifeContainer.PADDING_WIDTH} ${viewportHeight - GameOfLifeContainer.PADDING_WIDTH}`;
-      (this.refs["svgRef"] as any).setAttribute("viewBox", viewBoxString);
-      (this.refs["svgRef"] as any).setAttribute("width", viewportWidth);
-      (this.refs["svgRef"] as any).setAttribute("height", viewportHeight);
-    }
-    */
+    cellSize(value);
   }
 
   private stop(): boolean {
@@ -153,12 +135,11 @@ export default class GameOfLifeContainer extends Vue {
 
   private getBoardCoordinates(e: any): Point {
     const cpt = this.convertClientToSVG(e.clientX, e.clientY);
-    return new Point(Math.floor(cpt.x / this.cellSize), Math.floor(cpt.y / this.cellSize));
+    return new Point(Math.floor(cpt.x / this.board.cellSize), Math.floor(cpt.y / this.board.cellSize));
   }
 
   private  convertClientToSVG(x: number, y: number): Point {
-/* TODO: implement
-    const svg: SVGSVGElement = (this.refs["svgRef"] as any);
+    const svg = this.$refs.svgRef as any;
     // convert from screen to matrix coordinates
     const point = svg.createSVGPoint();
     const transform = svg.getScreenCTM().inverse();
@@ -166,8 +147,6 @@ export default class GameOfLifeContainer extends Vue {
     point.y = y;
     const transformedPoint = point.matrixTransform(transform);
     return new Point(transformedPoint.x, transformedPoint.y);
- */
-   return new Point(0,0);
   }
 
   private log(evtName: string, e: any): void {
