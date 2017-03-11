@@ -4,9 +4,8 @@ Game of Life Performance Measurement with Vue.js
 Goals
 -----
 
-- measure react performance with different approaches to component updates using the Game of Life Game
+- compare Vue performance and implementation issues to different variants of React Updates using the Game of Life Game
 - for a summary of the results see [game-of-life](https://github.com/vanmeegen/game-of-life)
-
 
 Running
 -------

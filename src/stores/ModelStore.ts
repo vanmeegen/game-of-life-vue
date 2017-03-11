@@ -27,7 +27,7 @@ export class Board {
 
   constructor(maxX: number, maxY: number) {
     this.initSize(maxX, maxY).initEmpty();
-    this.cellSize = 10;
+    this.cellSize = 5;
   }
 
   set(x: number, y: number, value: boolean): void {
