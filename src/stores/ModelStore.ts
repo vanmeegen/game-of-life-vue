@@ -27,7 +27,7 @@ export class Board {
 
   constructor(maxX: number, maxY: number) {
     this.initSize(maxX, maxY).initEmpty();
-    this.cellSize = 5;
+    this.cellSize = 15;
   }
 
   set(x: number, y: number, value: boolean): void {
@@ -60,6 +60,16 @@ export class Board {
     this.init(() => Math.random() < 0.3);
   }
 
+  public initPentomino(): void {
+    const shape = [[1, 0], [2, 0], [1, 1], [1, 2], [0, 1]];
+    this.initEmpty();
+    const gridStep = 40;
+    for (let y = gridStep / 2; y < this.maxX; y += gridStep) {
+      for (let x = gridStep / 2; x < this.maxX; x += gridStep) {
+        shape.forEach(([dx, dy]) => this.set(x + dx, y + dy, true));
+      }
+    }
+  }
   /**
    * initializes cell with regular pattern for better reproducability
    */
@@ -142,7 +152,7 @@ export class Board {
 export class ModelStore extends StoreBase {
 
   private _board: Board;
-  private static DEFAULT_SIZE: number = 75;
+  private static DEFAULT_SIZE: number = 50;
 
   constructor() {
     super();
@@ -162,13 +172,16 @@ export class ModelStore extends StoreBase {
   }
 
   accept(action: Action): void {
-    log.info("ModelStore accepting", action);
+    log.debug("ModelStore accepting", action);
     switch (action.type) {
       case "clear":
         this._board.initEmpty();
         break;
       case "initRandom":
         this._board.initRandom();
+        break;
+      case "initPentomino":
+        this._board.initPentomino();
         break;
       case "initRegular":
         this._board.initRegular();

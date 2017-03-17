@@ -1,6 +1,7 @@
 import {Configuration} from "./common/Configuration";
 import Vue = require("vue");
 // for minimal app test setup
+import "bootstrap/dist/css/bootstrap.css";
 import "./components/app.css";
 import Comp from "./components/Main.vue";
 /*

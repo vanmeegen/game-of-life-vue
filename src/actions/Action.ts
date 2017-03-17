@@ -10,6 +10,7 @@ export type ActionType =
         | "next" /* calculate and render next generation*/
         | "initRandom" /* init cell with random life */
         | "initRegular" /* init cell with regular pattern */
+        | "initPentomino" /* init cell with pentomino pattern */
         | "set"
         | "size"
         | "cellSize";
