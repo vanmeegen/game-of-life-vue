@@ -2,7 +2,7 @@
  <div class="editor-bar" :title='tooltip || "unknown"'>
    <div>
      <h3 class="editor-title">{{title}}</h3>
-     <a href="http://www.mvmsoft.de" style="inline-block; margin-left: 5px">Marco van Meegen</a>
+     <a href="http://www.mvmsoft.de" style="display:inline-block; margin-left: 5px">Author: Marco van Meegen</a>
        <FPSMeter :id="fpsId"/>
    </div>
    <div class="editor-menu btn-group" role="group">

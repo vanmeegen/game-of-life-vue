@@ -1,5 +1,5 @@
 <template>
-  <h6 style='display: "inline-block"'>FPS
+  <h6 style="margin: 5px; display: inline-block">FPS
     <span class="label label-default" :id="id">0</span>
   </h6>
 </template>
