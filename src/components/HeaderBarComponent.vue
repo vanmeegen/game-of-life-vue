@@ -10,13 +10,11 @@
    </div>
  </div>
 </template>
-<script>
-import Vue = require("vue");
-import Component from 'vue-class-component'
-import log from "../Logger";
-import FPSMeter from "./FPSMeter.vue";
+<script lang="ts">
+  import {Component, Vue} from "vue-property-decorator";
+  import FPSMeter from "./FPSMeter.vue";
 
-@Component({
+  @Component({
 props: {
   title: String,
   fpsId: String,

@@ -30,19 +30,18 @@
   </div>
 </div>
 </template>
-<script>
-import Vue = require("vue");
-import Component from "vue-class-component";
-import {Configuration} from "../common/Configuration";
-import CellGrid from "./CellGrid.vue";
-import Grid from "./Grid.vue";
-import HeaderBarComponent from "./HeaderBarComponent.vue";
-import {Board} from "../stores/ModelStore";
-import {initRandom, initRegular, next, clear, size, set, cellSize, initPentomino} from "../actions/ActionCreator";
-import {Point} from "../util/Geometry";
-import log from "../Logger";
+<script lang="ts">
+  import {Component, Vue} from "vue-property-decorator";
+  import {Configuration} from "../common/Configuration";
+  import CellGrid from "./CellGrid.vue";
+  import Grid from "./Grid.vue";
+  import HeaderBarComponent from "./HeaderBarComponent.vue";
+  import {Board} from "../stores/ModelStore";
+  import {cellSize, clear, initPentomino, initRandom, initRegular, next, set, size} from "../actions/ActionCreator";
+  import {Point} from "../util/Geometry";
+  import log from "../Logger";
 
-@Component({
+  @Component({
     props: {
        board: Board
     },

@@ -7,15 +7,14 @@
   </svg>
 </div>
 </template>
-<script>
-import Vue = require("vue");
-import Component from "vue-class-component";
-import CellGrid from "./CellGrid.vue";
-import Grid from "./Grid.vue";
-import HeaderBarComponent from "./HeaderBarComponent.vue";
-import {Board} from "../stores/ModelStore"
+<script lang="ts">
+  import {Component, Vue} from "vue-property-decorator";
+  import CellGrid from "./CellGrid.vue";
+  import Grid from "./Grid.vue";
+  import HeaderBarComponent from "./HeaderBarComponent.vue";
+  import {Board} from "../stores/ModelStore"
 
-@Component({
+  @Component({
     props: {
       board: Object
     },

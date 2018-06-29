@@ -1,14 +1,13 @@
 <template>
     <GameOfLifeContainer :board="board"/>
 </template>
-<script>
-import Vue = require("vue");
-import Component from 'vue-class-component'
-import log from "../Logger";
-import GameOfLifeContainer from "./GameOfLifeContainer.vue";
-import modelStore from "../stores/ModelStore";
+<script lang="ts">
+  import {Component, Vue} from "vue-property-decorator";
 
-@Component({
+  import GameOfLifeContainer from "./GameOfLifeContainer.vue";
+  import modelStore from "../stores/ModelStore";
+
+  @Component({
 components: {
     GameOfLifeContainer
   }

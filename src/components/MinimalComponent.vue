@@ -1,11 +1,10 @@
 <template>
 <h1 @click="onClick">Comp {{message}}</h1>
 </template>
-<script>
-import Vue = require("vue");
-import Component from 'vue-class-component'
+<script lang="ts">
+  import {Component, Vue} from "vue-property-decorator";
 
-@Component({
+  @Component({
   props: {
     message: String
   }

@@ -3,15 +3,13 @@
     <CellRow v-for="(row,y) in board.cells" :maxX="board.maxX" :maxY="board.maxY" :y="y" :cellSize="cellSize" :boardRow="row" :key="y"/>
 </g>
 </template>
-<script>
-import Vue = require("vue");
-import Component from 'vue-class-component'
-import CellRow from "./CellRow.vue";
-import log from "../Logger";
-import {Board} from "../stores/ModelStore"
+<script lang="ts">
+  import {Component, Vue} from "vue-property-decorator";
+  import CellRow from "./CellRow.vue";
+  import {Board} from "../stores/ModelStore"
 
 
-@Component({
+  @Component({
     props: {
         cellSize: Number,
         board: Board

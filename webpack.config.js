@@ -1,7 +1,9 @@
 const path = require('path');
 const webpack = require("webpack");
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
+  mode: "development",
   entry: {web: "./src/index.ts"},
   output: {
     // output path
@@ -10,41 +12,29 @@ module.exports = {
     filename: 'bundle-[name].js'
   },
 
-  devtool: "source-map",
+  devtool: "#eval-source-map",
 
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ["", ".webpack.js", ".web.js", ".ts", ".vue", ".tsx", ".js", ".min.js"],
-    alias: {"ag-grid-root": __dirname + "/node_modules/ag-grid"}
+    extensions: [".webpack.js", ".web.js", ".ts", ".vue", ".tsx", ".js", ".min.js"],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js'
+    }
   },
   module: {
-    loaders: [
+    rules: [
       // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
-      { test: /\.vue$/, loader: "vue" },
-      { test: /\.ts$/, loader: "vue-ts" },
+      {test: /\.vue$/, loader: "vue-loader"},
+      {
+        test: /\.tsx?$/,
+        loader: "ts-loader",
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+        }
+      },
       {test: /\.css$/, loader: 'style-loader!css-loader'},
-      {test: /\.(png|jpg|gif)$/, loader: "file-loader?name=img/[name].[ext]"},
-
-      // loaders needed for bootstrap
-      {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader"},
-      {test: /\.(woff|woff2)$/, loader: "url-loader?prefix=font/&limit=5000"},
-      {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader?limit=10000&mimetype=application/octet-stream"},
-      {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader?limit=10000&mimetype=image/svg+xml"}
-    ],
-    preLoaders: [
-      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-      {test: /\.js$/, loader: "source-map-loader"}
+      {test: /\.(png|jpg|gif)$/, loader: "file-loader?name=img/[name].[ext]"}
     ]
-  },
-
-  vue: {
-    // instruct vue-loader to load TypeScript
-    loaders: { js: "vue-ts-loader"},
-    // make TS' generated code cooperate with vue-loader
-    esModule: true
-  },
-
-  externals: {
   },
 
   plugins: [new webpack.DefinePlugin({
@@ -56,7 +46,8 @@ module.exports = {
     __BUILD_NUMBER__: JSON.stringify(process.env.BUILD_NUMBER),
     __GIT_COMMIT__: JSON.stringify(process.env.GIT_COMMIT),
     __NODE_ENV__: JSON.stringify('development')
-  })],
+  }),
+  new VueLoaderPlugin()],
 
   devServer: {
     port: 8080

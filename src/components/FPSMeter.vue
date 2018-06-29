@@ -1,20 +1,17 @@
 <template>
-  <h6 style="margin: 5px; display: inline-block">FPS
-    <span class="label label-default" :id="id">0</span>
-  </h6>
+    <h6 style="margin: 5px; display: inline-block">FPS
+        <span class="label label-default" :id="id">0</span>
+    </h6>
 </template>
-<script>
-import Vue = require("vue");
-import Component from 'vue-class-component'
-import log from "../Logger";
+<script lang="ts">
+  import {Component, Vue} from "vue-property-decorator";
 
-
-@Component({
-props: {
-  id: String
+  @Component({
+    props: {
+      id: String
+    }
+  })
+  export default class FPSMeter extends Vue {
+    id: string;
   }
-})
-export default class FPSMeter extends Vue {
-  id: string;
-}
 </script>

@@ -4,13 +4,11 @@
   <line v-for="y in maxY" :key="'hor' + y" :x1="0" :y1="y*cellSize" :x2="maxX * cellSize" :y2 = "y * cellSize" class="board-grid"/>
 </g>
 </template>
-<script>
-import Vue = require("vue");
-import Component from 'vue-class-component'
-import log from "../Logger";
+<script lang="ts">
+  import {Component, Vue} from "vue-property-decorator";
 
 
-@Component({
+  @Component({
     props: {
         cellSize: Number,
         maxX: Number,

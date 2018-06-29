@@ -4,12 +4,11 @@
   <Comp message="Hi there"/>
 </div>
 </template>
-<script>
-import Vue = require("vue");
-import Component from "vue-class-component";
-import Comp from "./MinimalComponent.vue";
+<script lang="ts">
+  import {Component, Vue} from "vue-property-decorator";
+  import Comp from "./MinimalComponent.vue";
 
-@Component({
+  @Component({
   props: {
     message: String
   },
